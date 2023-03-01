@@ -5,7 +5,7 @@ Project 1 - Number Guessing Game
 """
 
 import random
-number_of_attempts = 0
+highest_scores = []
 
 def start_game():
     print("""
@@ -15,28 +15,37 @@ def start_game():
     # Generating rundom number
     random_number = random.randrange(1, 11)
     number_of_attempts = 0
-    
     # Starting while loop that contains all steps of the game
     while True: 
         try:
             new_guess = input("Guess the number:  ")
             new_guess = int(new_guess)
             number_of_attempts += 1
+            
             # If user gets the number
             if new_guess == random_number:
+                # Saving the number of attempts to the list
+                highest_scores.append(number_of_attempts)
+                
                 print("You got it!")
                 print("It took you a {} attempts to guess the number".format(number_of_attempts))
                 print("Thanks for playing!")
                 # Asking user if he/she wants to play again
                 play_again = input("Do you want to play again? Y/N   ")
-                if play_again.lower() == "y":
-                    print("The current best score is {} attempts. Try to beat that!".format(number_of_attempts))
+                if play_again.lower() == "y": 
+                    # Saving the number of attempts to the list
+                    highest_scores.append(number_of_attempts)
+                    #Getting the highest score/the lowest number from the list
+                    highest_score = min(highest_scores)
+                    print("The current best score is {} attempts. ".format(highest_score))
+                    if highest_score == 1:
+                        print("Great job! You achieved the best possible result")
                     start_game()
                 else:
                     print("OK. Have a nice day!")
                     break
             # If user enters bigger number but not bigger than 10
-            elif new_guess > random_number and new_guess < 10:
+            elif new_guess > random_number and new_guess <= 10:
                 print("It's lower")
             # If user enters lower number but not lower than 1    
             elif new_guess < random_number and new_guess >= 1:
@@ -52,7 +61,3 @@ def start_game():
 
 # Calling the function
 start_game()
-
-
-
-
